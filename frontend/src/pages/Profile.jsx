@@ -6,6 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEdit } from "react-icons/fa";
 
+const BASE_URL = 'https://lostnfound-dffc.onrender.com';
+
+
 const ProfilePage = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
@@ -19,7 +22,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+        const res = await axios.get(`${BASE_URL}/api/auth/profile`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -35,7 +38,7 @@ const ProfilePage = () => {
 
     const fetchUserItems = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/user-items", {
+        const res = await axios.get(`${BASE_URL}/api/auth/user-items`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -76,7 +79,7 @@ const ProfilePage = () => {
     }
 
     try {
-      const res = await axios.put("http://localhost:5000/api/auth/update-profile", updatedForm, {
+      const res = await axios.put(`${BASE_URL}/api/auth/update-profile`, updatedForm, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -104,7 +107,7 @@ const ProfilePage = () => {
 
   const deleteItem = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/auth/user-items/${itemToDelete}`, {
+      await axios.delete(`${BASE_URL}/api/auth/user-items/${itemToDelete}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -136,7 +139,7 @@ const ProfilePage = () => {
         <div className="profile-card">
           <div className="avatar-container">
             {userProfile.image ? (
-              <img src={`http://localhost:5000${userProfile.image}`} alt="profile" className="avatar" />
+              <img src={`${BASE_URL}/${userProfile.image}`} alt="profile" className="avatar" />
             ) : (
               <div className="avatar-placeholder">100×100</div>
             )}
@@ -165,7 +168,7 @@ const ProfilePage = () => {
             <div className="lost-card" key={item._id}>
               <div className="card-image">
                 {item.images?.[0] ? (
-                  <img src={`http://localhost:5000/uploads/${item.images[0]}`} alt={item.title} />
+                  <img src={`${BASE_URL}//${item.images[0]}`} alt={item.title} />
                 ) : (
                   <div className="no-image">No Image</div>
                 )}

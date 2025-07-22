@@ -1,7 +1,9 @@
  
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api/claims';  
+// const BASE_URL = 'http://localhost:5000/api/claims';  
+const BASE_URL = 'https://lostnfound-dffc.onrender.com/api/claims';
+
 
 export const fetchClaims = async () => {
   try {

@@ -7,6 +7,8 @@ import { HashLoader } from "react-spinners";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 
+const BASE_URL = 'https://lostnfound-dffc.onrender.com';
+
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -38,7 +40,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signin", {
+      const res = await await axios.post(`${BASE_URL}/api/auth/signin`, {
         rollNumber: loginRoll,
         password: loginPassword,
       });
@@ -67,7 +69,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/login", {
+      const res = await axios.post(`${BASE_URL}/api/admin/login`, {
         adminId,
         password: adminPassword,
       });
@@ -107,7 +109,7 @@ const Login = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", {
+      await axios.post(`${BASE_URL}/api/auth/signup`, {
         name: signupName,
         rollNumber: signupRoll,
         email: signupEmail,
@@ -133,7 +135,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/send-otp", {
+      await axios.post(`${BASE_URL}/api/auth/send-otp`, {
         email: forgotEmail,
       });
       toast.success("OTP sent to registered email");
@@ -149,7 +151,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/verify-otp", {
+      await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
         email: forgotEmail,
         otp,
       });
@@ -181,7 +183,7 @@ const Login = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/auth/reset-password", {
+      await axios.post(`${BASE_URL}/api/auth/reset-password`, {
         email: forgotEmail,
         otp,
         newPassword,

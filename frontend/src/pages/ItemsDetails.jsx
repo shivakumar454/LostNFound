@@ -6,6 +6,8 @@ import axios from 'axios';
 import './ItemDetails.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const BASE_URL = 'https://lostnfound-dffc.onrender.com';
+
 
 const ItemDetails = () => {
   const userId = localStorage.getItem('userId');
@@ -28,12 +30,12 @@ const ItemDetails = () => {
   const [claimApproved, setClaimApproved] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/reports`)
+    axios.get(`${BASE_URL}/api/reports`)
       .then(res => {
         const foundItem = res.data.find(i => i._id === id);
         setItem(foundItem);
         if (foundItem?.poster) {
-          axios.get(`http://localhost:5000/api/auth/${foundItem.poster}`)
+          axios.get(`${BASE_URL}/api/auth/${foundItem.poster}`)
             .then(userRes => setPosterInfo(userRes.data))
             .catch(err => console.error("Failed to load user info:", err));
         }
@@ -44,7 +46,7 @@ const ItemDetails = () => {
   useEffect(() => {
     const fetchClaims = () => {
       if (item?._id) {
-        axios.get(`http://localhost:5000/api/claims/item/${item._id}`)
+       axios.get(`${BASE_URL}/api/claims/item/${item._id}`)
           .then(res => {
             const claimList = res.data.claims;
             setClaims(claimList);
@@ -106,7 +108,7 @@ const ItemDetails = () => {
     formData.append('claimantId', userId);
 
     try {
-      await axios.post('http://localhost:5000/api/claims', formData);
+      await axios.post(`${BASE_URL}/api/claims`, formData)
       toast.success("Your submission has been received!");
       setShowModal(false);
       setClaimSubmitted(true);
@@ -136,7 +138,7 @@ const ItemDetails = () => {
 
       <div className="item-image">
         {item.images && item.images.length > 0 ? (
-          <img src={`http://localhost:5000/uploads/${item.images[0]}`} alt={item.title} />
+          <img src={`${BASE_URL}/uploads/${item.images[0]}`} alt={item.title} />
         ) : (
           <p>No image available</p>
         )}
